@@ -24,7 +24,30 @@ select e.nombre, e.apellidos, d.nombre, d.presupuesto from empleados e inner joi
 
 select e.nombre, e.apellidos from empleados e inner join departamentos d on e.departamento = d.codigo where d.presupuesto > 60000; -- 2.12
 
-select d.* from departamentos d inner join empleados e on d.codigo = e.departamento where d.presupuesto
+select * from departamentos where presupuesto > (
+	select avg(presupuesto) from departamentos
+); -- 2.13
+
+select d.nombre from empleados e inner join departamentos d on d.codigo = e.DEPARTAMENTO group by d.nombre having count(e.nombre)>2; -- 2.14
+
+insert into departamentos values (22, 'Calidad', 40000);
+
+insert into empleados values (89267109, 'Ester', 'Vazquez', 22);  -- 2.15
+
+update departamentos set presupuesto = presupuesto * 0.9;  -- 2.16
+
+update empleados set departamento = 77 where departamento = 14;  -- 2.17
+
+delete from empleados where departamento = 14;  -- 2.18
+
+delete from empleados where departamento IN (
+	select codigo from departamentos where presupuesto > 60000
+);  -- 2.19
+
+delete from empleados;  -- 2.20
+
+
+
 
 
 
